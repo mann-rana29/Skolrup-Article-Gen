@@ -92,7 +92,7 @@ def generateArticle(text1,text2):
       {
         "role" :"system",
         "content": "You are an advanced Article Generator. Create a high-quality, unified article from the two articles provided. "
-                    "Only extract the best ideas and express them clearly and professionally. The article must be 500–700 words, "
+                    "Only extract the best ideas and express them clearly and professionally. The article must be 1200–1500 words, "
                     "well-structured, and formally written in English. Do not include any gibberish, broken formatting, or mention of the original sources."
       },
       {
@@ -101,7 +101,7 @@ def generateArticle(text1,text2):
       }
     ],
     temperature=0.5,
-    max_tokens=1500,
+    max_tokens=2000,
     stream=False
   )
   return completion.choices[0].message.content
@@ -118,7 +118,7 @@ def generateImage(text):
   for part in response.candidates[0].content.parts:
     if part.inline_data is not None:
       image = Image.open(BytesIO((part.inline_data.data)))
-      image.save('Backend/Data/article_banner.png')
+      image.save(buffer,"png")
       return "Backend/Data/article_banner.png"
 
 # prompt = generatePrompt("why real madrid owns barcelona")
