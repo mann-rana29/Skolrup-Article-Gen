@@ -1,4 +1,4 @@
-import os,re
+import os,re, base64
 from openai import OpenAI
 from google import genai
 from google.genai import types
@@ -118,8 +118,11 @@ def generateImage(text):
   for part in response.candidates[0].content.parts:
     if part.inline_data is not None:
       image = Image.open(BytesIO((part.inline_data.data)))
-      image.save(buffer,"png")
-      return "Backend/Data/article_banner.png"
+
+      buffer = BytesIO()
+      image.save(buffer, format="PNG")
+      base64_img = base64.b64encode(buffer.getvalue()).decode("utf-8")
+      return base64_img
 
 # prompt = generatePrompt("why real madrid owns barcelona")
 # print(prompt)
