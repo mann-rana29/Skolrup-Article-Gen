@@ -23,12 +23,12 @@ def generate(query : str = Query(..., description="The topic to write about")):
         art1 = deepseek(prompt)
         art2 = chatgpt(prompt)
         final_art = generateArticle(art1,art2)
-        image_path = generateImage(prompt)
+        # image_path = generateImage(prompt)
 
         return{
             "prompt" : prompt,
             "article" : final_art,
-            "image_url" : image_path
+            # "image_url" : image_path
         }
     except Exception as e:
         return {"error": str(e)}
