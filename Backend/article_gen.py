@@ -18,7 +18,6 @@ client = OpenAI(
 )
 
 client2 = genai.Client(api_key=gemini_private_key)
-# print(openrouter_private_key, gemini_private_key)
 
 
 def deepseek(text):
@@ -42,7 +41,7 @@ def deepseek(text):
 
 def chatgpt(text):
   completion = client.chat.completions.create(
-    model="openai/gpt-4o",
+    model="openai/gpt-4.1-nano",
     messages=[
         {
           "role":"system",
@@ -54,7 +53,7 @@ def chatgpt(text):
         }
     ],
     temperature= 0.5,
-    max_tokens=1500,
+    max_tokens=1000,
     stream= False  
   )
   return completion.choices[0].message.content
@@ -73,7 +72,7 @@ def generatePrompt(query):
       }
     ],
     temperature=0.5,
-    max_tokens=500,
+    max_tokens=100,
     stream = False
   )
   return completion.choices[0].message.content
@@ -87,13 +86,11 @@ def generateArticle(text1,text2):
   text1 = clean_text(text1)
   text2 = clean_text(text2)
   completion = client.chat.completions.create(
-    model="openai/gpt-4o",
+    model="openai/gpt-4.1-nano",
     messages=[
       {
         "role" :"system",
-        "content": "You are an advanced Article Generator. Create a high-quality, unified article from the two articles provided. "
-                    "Only extract the best ideas and express them clearly and professionally. The article must be 1200–1500 words, "
-                    "well-structured, and formally written in English. Do not include any gibberish, broken formatting, or mention of the original sources."
+        "content": "You are an advanced Article Generator. Create a single, high-quality, unified article by combining the two articles provided. Extract only the most valuable insights and express them clearly and professionally. The final article should be between 1200–1300 words, formally written in English, and well-structured with HTML formatting. Use proper tags such as <h1>, <h2>, <p>, <ul>, <ol>, and <blockquote> to organize the content cleanly. Avoid gibberish, broken formatting, inline CSS, and any mention of original sources. Return only valid HTML content."
       },
       {
         "role" : "user",
@@ -101,15 +98,15 @@ def generateArticle(text1,text2):
       }
     ],
     temperature=0.5,
-    max_tokens=2000,
+    max_tokens=1800,
     stream=False
   )
-  return completion.choices[0].message.content
+  return completion.choices[0].message.content.encode('ascii', 'ignore').decode()
 
-def generateImage(text):
+# def generateImage(text):
   response = client2.models.generate_content(
     model= "gemini-2.0-flash-preview-image-generation",
-    contents=f"Can you create a visually appealing image of landscape size for a article banner on this topic : {text}",
+    contents=f"Can you create a visually appealing image of 500 x 300  size for a article banner on this topic : {text}",
     config=types.GenerateContentConfig(
       response_modalities=['TEXT', 'IMAGE']
     )
@@ -124,14 +121,14 @@ def generateImage(text):
       base64_img = base64.b64encode(buffer.getvalue()).decode("utf-8")
       return base64_img
 
-# prompt = generatePrompt("why real madrid owns barcelona")
-# print(prompt)
+prompt = generatePrompt("Barcelona pays refree")
+print(prompt)
 
-# article1 = deepseek(prompt)
+article1 = deepseek(prompt)
 # print("------------------------------------------------------")
-# article2 =chatgpt(prompt)
+article2 =chatgpt(prompt)
 
-# print(generateArticle(article1,article2).encode('ascii', 'ignore').decode())
+print(generateArticle(article1,article2))
 
 # generateImage(prompt)
 
