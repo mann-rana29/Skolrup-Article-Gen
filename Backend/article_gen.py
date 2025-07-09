@@ -5,12 +5,22 @@ from google.genai import types
 from PIL import Image
 from io import BytesIO
 from dotenv import load_dotenv
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+from cloudinary import CloudinaryImage
+
 
 load_dotenv()
 gemini_private_key = os.getenv("GEMINI_API_KEY")
 openrouter_private_key = os.getenv("OPENROUTER_API_KEY")
 
-
+cloudinary.config(
+  cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+  api_key=os.getenv("CLOUDINARY_API_KEY"),
+  api_secret=os.getenv("CLOUDINARY_API_SECRET"),
+  secure=True
+)
 
 client = OpenAI(
   base_url="https://openrouter.ai/api/v1",
@@ -103,10 +113,10 @@ def generateArticle(text1,text2):
   )
   return completion.choices[0].message.content.encode('ascii', 'ignore').decode()
 
-# def generateImage(text):
+def generateImage(text):
   response = client2.models.generate_content(
     model= "gemini-2.0-flash-preview-image-generation",
-    contents=f"Can you create a visually appealing image of 500 x 300  size for a article banner on this topic : {text}",
+    contents=f"Can you create a visually appealing image of 930 x 450  size for a article banner on this topic : {text}",
     config=types.GenerateContentConfig(
       response_modalities=['TEXT', 'IMAGE']
     )
@@ -114,21 +124,36 @@ def generateArticle(text1,text2):
 
   for part in response.candidates[0].content.parts:
     if part.inline_data is not None:
-      image = Image.open(BytesIO((part.inline_data.data)))
+      image_data = part.inline_data.data
+      break
+      
+  if image_data is None:
+    return None
+  file_name = text.strip()
 
-      buffer = BytesIO()
-      image.save(buffer, format="PNG")
-      base64_img = base64.b64encode(buffer.getvalue()).decode("utf-8")
-      return base64_img
+  upload_result = cloudinary.uploader.upload(
+    image_data,
+    public_id = f"article_banners/{file_name}",
+    folder = "article_banners",
+    resource_type = "image",
+    format = "png",
+    transformation =[
+      {"width": 930, "height": 450}
+    ]
+  )
+    
+    
+  return upload_result["secure_url"]
+      
 
-prompt = generatePrompt("Barcelona pays refree")
+prompt = generatePrompt("Gonzalo Garcia")
 print(prompt)
 
-article1 = deepseek(prompt)
+# article1 = deepseek(prompt)
 # print("------------------------------------------------------")
-article2 =chatgpt(prompt)
+# article2 =chatgpt(prompt)
 
-print(generateArticle(article1,article2))
+# print(generateArticle(article1,article2))
 
-# generateImage(prompt)
+print(generateImage(prompt))
 

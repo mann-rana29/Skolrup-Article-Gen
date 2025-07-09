@@ -3,7 +3,6 @@ import { Input } from "@/components/ui/input";
 import * as React from "react";
 import AnimatedContent from "@/blocks/Animations/AnimatedContent/AnimatedContent";
 import { Button } from "@/components/ui/button";
-import ReactMarkdown from 'react-markdown'
 
 
 function Home(){
@@ -87,8 +86,7 @@ function Home(){
 
 <h2>Conclusion: Embracing AI as a Catalyst for Human Potential</h2>
 
-<p>AI is not an existential threat to human employment but a powerful tool for transformation. Its true potential lies in complementing human strengthscreativity, empathy, ethical judgmentand addressing global challenges more effectively. While disruption is inevitable, history demonstrates that economies and societies adapt when technology is paired with forward-looking policies and investments.</p>
-`;
+<p>AI is not an existential threat to human employment but a powerful tool for transformation. Its true potential lies in complementing human strengthscreativity, empathy, ethical judgmentand addressing global challenges more effectively. While disruption is inevitable, history demonstrates that economies and societies adapt when technology is paired with forward-looking policies and investments.</p>`;
 
     const [text,setText] = React.useState("")
     const [img,setImg] = React.useState("")
@@ -104,7 +102,7 @@ function Home(){
                 </div>
                 <AnimatedContent direction="vertical"ease="power3.out" scale={0.2} delay={0.4} duration={1.3} reverse={true}>
                     <div id="Search Section" className="flex justify-center   items-center gap-2">
-                        <Input onChange={(e)=> setText(e.target.value)} type="search" className="text-white  w-[30%]  " placeholder="Which article you want to read today?"></Input>    
+                        <Input onChange={(e)=> setText(e.target.value)} type="search" className="text-white  w-[30%]  " placeholder="Which article you want to read today? (kindly add tags for best results)"></Input>    
                         <Button onClick={()=>{alert("submitted")}} className="text-center " variant={"secondary"}>Search</Button>            
                     </div>
                 </AnimatedContent>
@@ -112,10 +110,10 @@ function Home(){
             </div>
              <div id="Article Section" className="flex-col m-5 justify-center  items-center text-white  ">
                 <div className="flex justify-center">
-                     <img src={"https://picsum.photos/id/237/930/400"} alt="Article Banner" className="w-[930px] h-[400px]   m-7  object-cover  rounded-xl" />
+                     <img src={"img"} alt="Article Banner" className="w-[930px] h-[400px] m-7  object-cover  rounded-xl" />
                 </div>
-                <div className="flex justify-center">
-                    <div className="bg-neutral-900 p-6 w-[930px] rounded-xl space-y-4 [&>h1]:text-3xl [&>h1]:font-bold [&>h2]:text-2xl [&>h2]:font-semibold [&>p]:mb-4 [&>ul]:list-disc [&>ul]:ml-6 [&>ol]:list-decimal [&>ol]:ml-6 [&>blockquote]:border-l-4 [&>blockquote]:pl-4 [&>blockquote]:italic" dangerouslySetInnerHTML={{__html: dummyArticle }}/>                        
+                <div className="flex  justify-center">
+                    <div className="bg-neutral-900 invisible p-6 w-[930px] rounded-xl space-y-4 [&>h1]:text-3xl [&>h1]:font-bold [&>h2]:text-2xl [&>h2]:font-semibold [&>p]:mb-4 [&>ul]:list-disc [&>ul]:ml-6 [&>ol]:list-decimal [&>ol]:ml-6 [&>blockquote]:border-l-4 [&>blockquote]:pl-4 [&>blockquote]:italic" dangerouslySetInnerHTML={{__html: art }}/>                        
                 </div>  
             </div>
 
