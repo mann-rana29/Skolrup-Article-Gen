@@ -116,7 +116,7 @@ def generateArticle(text1,text2):
 def generateImage(text):
   response = client2.models.generate_content(
     model= "gemini-2.0-flash-preview-image-generation",
-    contents=f"Can you create a visually appealing image of 930 x 450  size for a article banner on this topic : {text}",
+    contents=f"Can you create a visually appealing image of 930 x 500  size for a article banner on this topic : {text}",
     config=types.GenerateContentConfig(
       response_modalities=['TEXT', 'IMAGE']
     )
@@ -138,7 +138,7 @@ def generateImage(text):
     resource_type = "image",
     format = "png",
     transformation =[
-      {"width": 930, "height": 450}
+      {"width": 930, "height": 500}
     ]
   )
     
@@ -146,8 +146,8 @@ def generateImage(text):
   return upload_result["secure_url"]
       
 
-prompt = generatePrompt("Gonzalo Garcia")
-print(prompt)
+# prompt = generatePrompt("Gonzalo Garcia")
+# print(prompt)
 
 # article1 = deepseek(prompt)
 # print("------------------------------------------------------")
@@ -155,5 +155,5 @@ print(prompt)
 
 # print(generateArticle(article1,article2))
 
-print(generateImage(prompt))
+# print(generateImage(prompt))
 

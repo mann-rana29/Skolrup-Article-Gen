@@ -17,22 +17,19 @@ app.add_middleware(
 class ArticleRequest(BaseModel):
     query: str
 
-@app.get("/")
-def root():
-    return {"message" : "Welcome to the Skolrup Article Gen"}
 
-@app.post("/generate-article")
+@app.post("/")
 def generate(req : ArticleRequest):
     try:
         prompt = generatePrompt(req.query)
         art1 = deepseek(prompt)
         art2 = chatgpt(prompt)
         final_art = generateArticle(art1,art2)
-        # image_base64 = generateImage(prompt)
+        image_url = generateImage(prompt)
 
         return{
             "article" : final_art,
-            # "image" : f"data:image/png;base64,{image_base64}" if image_base64 else None
+            "image_url" : image_url
         }
     except Exception as e:
         return {"error": str(e)}
