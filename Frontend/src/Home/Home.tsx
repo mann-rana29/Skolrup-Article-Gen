@@ -7,14 +7,18 @@ import axios from 'axios'
 
 
 function Home(){
-    const [loading, setLoading] = React.useState(true)
+    const [loading, setLoading] = React.useState(false)
     const [text,setText] = React.useState("")
     const [img,setImg] = React.useState("")
     const [art,setArt] = React.useState("")
+    const [visible,setVisible] = React.useState(false)
 
     const handleSubmit = async(e : React.FormEvent)=>{
         e.preventDefault()
         setArt('')
+        setImg('')
+        setLoading(true)
+        setVisible(true)
         try{
         const response = await axios.post("https://skolrup-article-gen.onrender.com/", {query: text})
         setImg(response.data.image_url)
@@ -34,10 +38,10 @@ function Home(){
                         <BlurText  className="  text-7xl font-bold mt-10 text-center text-white opacity-90" text="Skolrup Article Gen" stepDuration={0.35} delay={300}></BlurText>
                     </h1>
                 </div>
-                <AnimatedContent direction="vertical"ease="power3.out" scale={0.2} delay={0.4} duration={1.3} reverse={true}>
+                <AnimatedContent direction="vertical"ease="power3.out" scale={0.2} delay={0.2} duration={1.0} reverse={true}>
                     <div id="Search Section" className="flex justify-center   items-center gap-2">
                         <Input onChange={(e)=> setText(e.target.value)} onSubmit={handleSubmit} type="search" className="text-white  w-[30%]  " placeholder="Which article you want to read today? "></Input>    
-                        <Button onClick={handleSubmit} className="text-center " variant={"secondary"}>Search</Button>            
+                        <Button onClick={handleSubmit} className="text-center bg-white text-black hover:bg-gray-300 hover:scale-105 cursor-pointer" >Search</Button>            
                     </div>
                 </AnimatedContent>
             
@@ -48,7 +52,7 @@ function Home(){
                     {loading ? (
                     <div className="w-[930px] h-[400px] m-7 bg-neutral-800 animate-pulse rounded-xl" />
                 ) : (
-                     <img src={img} alt="Article Banner" className="w-[930px] h-[400px] m-7  object-cover  rounded-xl" />)}
+                     <img src={img} alt="Article Banner" className={visible?"w-[930px] h-[400px] m-7  object-cover  rounded-xl":"invisible" }/>)}
                 </div>
                 {loading ? (
             <div className="flex justify-center">
@@ -62,7 +66,7 @@ function Home(){
             </div>
             ) : (
                 <div className="flex  justify-center">
-                    <div className="bg-neutral-900  p-6 w-[930px] rounded-xl space-y-4 [&>h1]:text-3xl [&>h1]:font-bold [&>h2]:text-2xl [&>h2]:font-semibold [&>p]:mb-4 [&>ul]:list-disc [&>ul]:ml-6 [&>ol]:list-decimal [&>ol]:ml-6 [&>blockquote]:border-l-4 [&>blockquote]:pl-4 [&>blockquote]:italic" dangerouslySetInnerHTML={{__html: art }}/>                        
+                    <div className={visible?"bg-neutral-900  p-6 w-[930px] rounded-xl space-y-4 [&>h1]:text-3xl [&>h1]:font-bold [&>h2]:text-2xl [&>h2]:font-semibold [&>p]:mb-4 [&>ul]:list-disc [&>ul]:ml-6 [&>ol]:list-decimal [&>ol]:ml-6 [&>blockquote]:border-l-4  [&>blockquote]:pl-4 [&>blockquote]:italic":"invisible"} dangerouslySetInnerHTML={{__html: art }}/>                        
                 </div>  )}
             </div>
 
