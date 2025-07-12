@@ -35,12 +35,12 @@ function Home(){
             <div className="grid  gap-8 ">
                 <div id="Heading" className="h-32 flex justify-center items-center">
                     <h1>
-                        <BlurText  className="  text-7xl font-bold mt-10 text-center text-white opacity-90" text="Skolrup Article Gen" stepDuration={0.35} delay={300}></BlurText>
+                        <BlurText  className=" text-4xl  md:text-7xl font-bold mt-10 text-center text-white opacity-90" text="Skolrup Article Gen" stepDuration={0.35} delay={300}></BlurText>
                     </h1>
                 </div>
                 <AnimatedContent direction="vertical"ease="power3.out" scale={0.2} delay={0.2} duration={1.0} reverse={true}>
                     <div id="Search Section" className="flex justify-center   items-center gap-2">
-                        <Input onChange={(e)=> setText(e.target.value)} onSubmit={handleSubmit} type="search" className="text-white  w-[30%]  " placeholder="Which article you want to read today? "></Input>    
+                        <Input onChange={(e)=> setText(e.target.value)} onSubmit={handleSubmit} type="search" className="text-white  w-[33%] sm:w-[30%] placeholder:invisible sm:placeholder:visible " placeholder="Which article you want to read today? "></Input>    
                         <Button onClick={handleSubmit} className="text-center bg-white text-black hover:bg-gray-300 hover:scale-105 cursor-pointer" >Search</Button>            
                     </div>
                 </AnimatedContent>

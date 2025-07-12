@@ -96,7 +96,7 @@ def generateArticle(text1,text2):
   text1 = clean_text(text1)
   text2 = clean_text(text2)
   completion = client.chat.completions.create(
-    model="openai/gpt-4.1-nano",
+    model="meta-llama/llama-3.3-70b-instruct:free",
     messages=[
       {
         "role" :"system",
