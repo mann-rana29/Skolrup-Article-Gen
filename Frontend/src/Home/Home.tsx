@@ -57,7 +57,7 @@ function Home(){
                 {loading ? (
             <div className="flex justify-center">
                 <div className="animate-pulse w-[930px] space-y-4 p-6 bg-neutral-900 rounded-xl">
-                <div className="h-64 bg-neutral-800 rounded-xl"></div>
+                {/* <div className="h-64 bg-neutral-800 rounded-xl"></div> */}
                 <div className="h-6 bg-neutral-800 rounded w-3/4"></div>
                 <div className="h-4 bg-neutral-800 rounded w-full"></div>
                 <div className="h-4 bg-neutral-800 rounded w-5/6"></div>
