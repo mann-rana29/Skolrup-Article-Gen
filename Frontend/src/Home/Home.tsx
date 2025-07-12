@@ -16,7 +16,7 @@ function Home(){
         e.preventDefault()
         setArt('')
         try{
-        const response = await axios.post("http://127.0.0.1:8000/", {query: text})
+        const response = await axios.post("https://skolrup-article-gen.onrender.com/", {query: text})
         setImg(response.data.image_url)
         setArt(response.data.article)
         setLoading(false)
