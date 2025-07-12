@@ -51,7 +51,7 @@ def deepseek(text):
 
 def chatgpt(text):
   completion = client.chat.completions.create(
-    model="openai/gpt-4.1-nano",
+    model="meta-llama/llama-3.3-70b-instruct:free",
     messages=[
         {
           "role":"system",
@@ -70,7 +70,7 @@ def chatgpt(text):
 
 def generatePrompt(query):
   completion = client.chat.completions.create(
-    model= "openai/gpt-4o-mini",
+    model= "meta-llama/llama-3.3-70b-instruct:free",
     messages=[
       {
         "role" :"system", 
